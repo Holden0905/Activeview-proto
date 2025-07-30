@@ -1,4 +1,95 @@
 document.addEventListener('DOMContentLoaded', function(){
+    let db;
+    
+    // Initialize SQLite
+    async function initDatabase() {
+        try {
+            const SQL = await initSqlJs({
+                locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+            });
+            
+            // Create new database
+            db = new SQL.Database();
+            
+            // Create LDAR components table
+            const createTableSQL = `
+                CREATE TABLE IF NOT EXISTS components (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    client TEXT,
+                    description TEXT,
+                    building TEXT,
+                    unit TEXT,
+                    area TEXT,
+                    tag TEXT,
+                    drawing TEXT,
+                    floor INTEGER,
+                    component_type TEXT,
+                    sub_type TEXT,
+                    regulation TEXT,
+                    chemical_state TEXT,
+                    dtm TEXT,
+                    utm TEXT,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+            `;
+            
+            db.run(createTableSQL);
+            
+            console.log('🎉 SQLite database initialized successfully!');
+            console.log('📊 LDAR components table created');
+            
+            // Update empty state message
+            updateEmptyState('Database ready. Upload Excel file or add components manually.');
+            
+        } catch (error) {
+            console.error('❌ Error initializing database:', error);
+        }
+    }
+    
+    // Helper function to update empty state
+    function updateEmptyState(message) {
+        const emptyRow = document.querySelector('.empty-state td');
+        if (emptyRow) {
+            emptyRow.textContent = message;
+        }
+    }
+
+    // Function to load components from database to table
+function loadComponentsFromDatabase() {
+    const tableBody = document.querySelector('tbody');
+    tableBody.innerHTML = '';
+    
+    const stmt = db.prepare('SELECT * FROM components ORDER BY id');
+    
+    while (stmt.step()) {
+        const row = stmt.getAsObject();
+        const newRow = document.createElement('tr');
+        
+        newRow.innerHTML = `
+            <td>${row.drawing || ''}</td>
+            <td>${row.building || ''}</td>
+            <td>${row.unit || ''}</td>
+            <td>${row.area || ''}</td>
+            <td>${row.tag || ''}</td>
+            <td>${row.component_type || ''}</td>
+            <td>${row.sub_type || ''}</td>
+            <td>${row.floor || ''}</td>
+            <td>${row.regulation || ''}</td>
+            <td>${row.chemical_state || ''}</td>
+            <td>${row.description || ''}</td>
+        `;
+        
+        tableBody.appendChild(newRow);
+    }
+    
+    stmt.free();
+}
+    
+    // Initialize database when page loads
+    initDatabase();
+    
+
+    // ... rest of your existing JavaScript
     const searchBox = document.getElementById('searchBox');
     const tableRows = document.querySelectorAll('tbody tr');
     const clearButton = document.getElementById('clearButton');
@@ -25,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     });
 
-    // Listen for upload button click
     // Listen for upload button click
 uploadBtn.addEventListener('click', function(){
     const file = csvFileInput.files[0];
@@ -63,33 +153,49 @@ uploadBtn.addEventListener('click', function(){
             uploadStatus.innerHTML = `Success! Loaded ${jsonData.length} components. Populating table...`;
 
             // Clear existing table rows
-            const tableBody = document.querySelector('tbody');
-            tableBody.innerHTML = '';
+            uploadStatus.innerHTML = 'Saving to database...';
+
+            // Clear existing data
+            db.run('DELETE FROM components');
+
+            // Insert each component into database
+            const insertSQL = `
+                INSERT INTO components (client, description, building, unit, area, tag, drawing, floor, component_type, sub_type, regulation, chemical_state, dtm, utm)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            `;
+
+            const stmt = db.prepare(insertSQL);
+
+            jsonData.forEach(function(component) {
+                stmt.run([
+                    component.Client || '',
+                    component.Description || '',
+                    component.Building || '',
+                    component.Unit || '',
+                    component.Area || '',
+                    component.Tag || '',
+                    component.Drawing || '',
+                    component.Floor || '',
+                    component['Component Type'] || '',
+                    component['Sub Type'] || '',
+                    component.Regulation || '',
+                    component['Chemical State'] || '',
+                    component.DTM || '',
+                    component.UTM || ''
+                ]);
+            });
+
+            stmt.free();
+
+            // Now load data from database to table
+            loadComponentsFromDatabase();
+
+            uploadStatus.innerHTML = `🎉 SUCCESS! Saved ${jsonData.length} components to database!`;
 
             console.log('First row keys:', Object.keys(jsonData[0] || {}));
             console.log('First few rows:', jsonData.slice(0, 3));
             console.log('Sample component structure:', jsonData[0]);
-
-            // Add each component to the table
-            jsonData.forEach(function(component) {
-                const newRow = document.createElement('tr');
-                
-                newRow.innerHTML = `
-                    <td>${component.Drawing || ''}</td>
-                    <td>${component.Building || ''}</td>
-                    <td>${component.Unit || ''}</td>
-                    <td>${component.Area || ''}</td>
-                    <td>${component.Tag || ''}</td>
-                    <td>${component['Component Type'] || ''}</td>
-                    <td>${component['Sub Type'] || ''}</td>
-                    <td>${component.Floor || ''}</td>
-                    <td>${component.Regulation || ''}</td>
-                    <td>${component['Chemical State'] || ''}</td>
-                    <td>${component.Description || ''}</td>
-                `;
-                
-                tableBody.appendChild(newRow);
-            });
+           
 
             uploadStatus.innerHTML = `SUCCESS! Loaded ${jsonData.length} LDAR components into your database!`;
                         uploadStatus.style.color = '#5cb85c';
@@ -283,3 +389,4 @@ saveComponentBtn.addEventListener('click', function(){
         console.log("cleared!");
     });
 });
+
