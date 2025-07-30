@@ -1,0 +1,439 @@
+/* LDAR Database - Matrix/Terminal Style */
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace; /* Terminal-style font */
+    background-color: #0a0a0a; /* Deep black */
+    color: #4a9a4a; /* Muted matrix green */
+    line-height: 1.4;
+    padding: 20px;
+}
+
+/* Header Section */
+header {
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-bottom: 2px solid #1a1a1a;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-text {
+    flex: 1;
+}
+
+.logo {
+    height: 100px; /* Adjust size as needed */
+    width: auto;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.logo:hover {
+    opacity: 1;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #5cb85c; /* Softer matrix green */
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-shadow: 0 0 10px rgba(92, 184, 92, 0.3); /* Adjusted glow */
+}
+
+h2 {
+    font-size: 1.2rem;
+    color: #7bc97b; /* Muted lighter green */
+    font-weight: normal;
+    opacity: 0.8;
+}
+
+/* Search box styling */
+.search-container {
+    margin-bottom: 20px;
+}
+
+#searchBox {
+    width: 400px;          
+    height: 40px;          /* Smaller height */
+    padding: 10px;         
+    font-size: 16px;       
+    background-color: #1a1a1a;  
+    color: #cccccc;        
+    border: 2px solid #333333;  
+    border-radius: 4px;    
+    font-family: 'Courier New', monospace;
+    box-sizing: border-box;  /* Add this */
+}
+
+/* Search box focus effect (when clicked/active) */
+#searchBox:focus {
+    outline: none;                    /* Removes default browser outline */
+    border-color: #5cb85c;           /* Green border when focused */
+    box-shadow: 0 0 10px rgba(92, 184, 92, 0.3);  /* Subtle green glow */
+}
+
+/* Search input group styling */
+/* Search input group styling */
+.search-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Clear button styling */
+.clear-btn {
+    background-color: #1a1a1a;
+    border: 2px solid #333333;
+    color: #5cb85c;
+    font-size: 22px;        
+    cursor: pointer;
+    padding: 0 15px;        /* Remove top/bottom padding */
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    height: 40px;
+    box-sizing: border-box; 
+    display: flex;          
+    align-items: center;    
+    justify-content: center; 
+}
+
+.clear-btn:hover {
+    background-color: #2a2a2a;
+    border-color: #5cb85c;
+}
+
+/* Search dropdown styling */
+.search-dropdown {
+    background-color: #1a1a1a;
+    border: 2px solid #333333;
+    color: #cccccc;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    height: 40px;
+    box-sizing: border-box;
+    margin-right: 10px;
+    min-width: 150px;
+}
+
+.search-dropdown:focus {
+    outline: none;
+    border-color: #5cb85c;
+    box-shadow: 0 0 10px rgba(92, 184, 92, 0.3);
+}
+
+.search-dropdown:hover {
+    border-color: #5cb85c;
+}
+
+/* Style the dropdown options */
+.search-dropdown option {
+    background-color: #1a1a1a;
+    color: #cccccc;
+    padding: 5px;
+}
+
+/* Add Component Section */
+.add-component-section {
+    margin-bottom: 0px;
+}
+
+.add-component-btn {
+    background-color: #5cb85c;
+    color: #000;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.add-component-btn:hover {
+    background-color: #7bc97b;
+}
+
+/* Component Form */
+.component-form {
+    background-color: #1a1a1a;
+    border: 2px solid #333333;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.component-form h3 {
+    color: #5cb85c;
+    margin-bottom: 20px;
+    font-family: 'Courier New', monospace;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-field label {
+    color: #5cb85c;
+    margin-bottom: 5px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}
+
+.form-field input {
+    background-color: #0a0a0a;
+    border: 1px solid #333333;
+    color: #cccccc;
+    padding: 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
+
+.form-field input:focus {
+    outline: none;
+    border-color: #5cb85c;
+    box-shadow: 0 0 5px rgba(92, 184, 92, 0.3);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.save-btn {
+    background-color: #5cb85c;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.cancel-btn {
+    background-color: #666666;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+}
+
+.save-btn:hover {
+    background-color: #7bc97b;
+}
+
+.cancel-btn:hover {
+    background-color: #888888;
+}
+
+/* File Upload Section */
+.file-upload-section {
+    background-color: #1a1a1a;
+    border: 2px solid #333333;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.file-upload-section h3 {
+    color: #5cb85c;
+    margin-bottom: 15px;
+    font-family: 'Courier New', monospace;
+}
+
+.file-input {
+    background-color: #1a1a1a;
+    border: 2px solid #333333;
+    color: #cccccc;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.file-input::-webkit-file-upload-button {
+    background-color: #333333;
+    border: none;
+    color: #5cb85c;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.file-input::-webkit-file-upload-button:hover {
+    background-color: #5cb85c;
+    color: #000;
+}
+
+.file-input:focus {
+    outline: none;
+    border-color: #5cb85c;
+    box-shadow: 0 0 5px rgba(92, 184, 92, 0.3);
+}
+
+.upload-btn {
+    background-color: #5cb85c;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.upload-btn:hover {
+    background-color: #7bc97b;
+}
+
+.upload-status {
+    margin-top: 10px;
+    font-family: 'Courier New', monospace;
+    color: #cccccc;
+}
+
+/* Empty state styling */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666666;
+    font-family: 'Courier New', monospace;
+    font-style: italic;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #111111; /* Dark grey background */
+    border: 1px solid #333333; /* Dark border */
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+/* Table Headers */
+thead {
+    background-color: #1a1a1a; /* Slightly lighter for contrast */
+}
+
+th {
+    padding: 12px 10px;
+    text-align: left;
+    font-weight: bold;
+    color: #5cb85c; /* Softer matrix green headers */
+    border: 1px solid #333333; /* Grid lines */
+    white-space: nowrap; /* Prevent text wrapping */
+    text-transform: uppercase; /* Terminal style */
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+/* Table Data Cells */
+td {
+    padding: 10px;
+    border: 1px solid #333333; /* Grid lines */
+    color: #cccccc; /* Light grey text for readability */
+    white-space: nowrap; /* Single line requirement */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Show ... if text is too long */
+}
+
+/* Alternating row colors for readability */
+tbody tr:nth-child(even) {
+    background-color: #0f0f0f; /* Slightly different shade */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #111111;
+}
+
+/* Hover effect */
+tbody tr:hover {
+    background-color: #1a2a1a; /* Dark green tint on hover */
+    color: #5cb85c; /* Softer matrix green text on hover */
+    transition: all 0.2s ease;
+}
+
+/* Hover effect for individual cells */
+td:hover {
+    background-color: #1a3a1a; /* Slightly brighter green */
+    color: #7bc97b; /* Muted light green */
+    cursor: pointer;
+}
+
+/* Special styling for first column (Drawing) */
+td:first-child {
+    color: #5cb85c; /* Softer matrix green for drawing numbers */
+    font-weight: bold;
+}
+
+/* Make table responsive */
+.table-container {
+    overflow-x: auto;
+    border: 1px solid #333333;
+    border-radius: 4px;
+}
+
+/* Scrollbar styling for dark theme */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333333;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5cb85c;
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .logo {
+        margin-top: 15px;
+        height: 40px;
+    }
+}

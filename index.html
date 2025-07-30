@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDAR Database</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-text">
+                <h1>Actiview - LDAR Database</h1>
+                <h2>REG - Seneca, IL</h2>
+            </div>
+            <img src="Signature.png" alt="PES Logo" class="logo">
+        </div>
+        
+    </header>
+    
+    <div class="search-container">
+        <div class="search-input-group">
+            <select id="searchColumn" class="search-dropdown">
+            <option value="all">All Columns</option>
+            <option value="drawing">Drawing</option>
+            <option value="building">Building</option>
+            <option value="unit">Unit</option>
+            <option value="area">Area</option>
+            <option value="tag">Tag</option>
+            <option value="component">Component Type</option>
+            <option value="subtype">Sub Type</option>
+            <option value="floor">Floor</option>
+            <option value="regulation">Regulation</option>
+            <option value="chemical">Chemical State</option>
+            <option value="description">Description</option>
+        </select>
+            <input type="text" id="searchBox" placeholder="search components...">
+            <button id="clearButton" class="clear-btn">X</button>
+        </div>
+    </div>
+
+    <div class="add-component-section">
+    <button id="showFormBtn" class="add-component-btn">+ Add New Component</button>
+    
+    <div id="componentForm" class="component-form" style="display: none;">
+        <h3>Add New Component</h3>
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="newDrawing">Drawing:</label>
+                <input type="text" id="newDrawing" required>
+            </div>
+            <div class="form-field">
+                <label for="newBuilding">Building:</label>
+                <input type="text" id="newBuilding" required>
+            </div>
+            <div class="form-field">
+                <label for="newUnit">Unit:</label>
+                <input type="text" id="newUnit" required>
+            </div>
+            <div class="form-field">
+                <label for="newArea">Area:</label>
+                <input type="text" id="newArea" required>
+            </div>
+            <div class="form-field">
+                <label for="newTag">Tag:</label>
+                <input type="text" id="newTag" required>
+            </div>
+            <div class="form-field">
+                <label for="newComponentType">Component Type:</label>
+                <input type="text" id="newComponentType" required>
+            </div>
+            <div class="form-field">
+                <label for="newSubType">Sub Type:</label>
+                <input type="text" id="newSubType" required>
+            </div>
+            <div class="form-field">
+                <label for="newFloor">Floor:</label>
+                <input type="number" id="newFloor" required>
+            </div>
+            <div class="form-field">
+                <label for="newRegulation">Regulation:</label>
+                <input type="text" id="newRegulation" required>
+            </div>
+            <div class="form-field">
+                <label for="newChemical">Chemical State:</label>
+                <input type="text" id="newChemical" required>
+            </div>
+            <div class="form-field full-width">
+                <label for="newDescription">Description:</label>
+                <input type="text" id="newDescription" required>
+            </div>
+        </div>
+        <div class="form-buttons">
+            <button type="button" id="saveComponent" class="save-btn">Save Component</button>
+            <button type="button" id="cancelForm" class="cancel-btn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div class="file-upload-section">
+    <h3>Import CSV Data</h3>
+    <input type="file" id="csvFileInput" accept=".csv,.xlsx" class="file-input">
+    <button id="uploadBtn" class="upload-btn">Upload File</button>
+    <div id="uploadStatus" class="upload-status"></div>
+</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Drawing</th>
+                <th>Building</th>
+                <th>Unit</th>
+                <th>Area</th>
+                <th>Tag</th>
+                <th>Component Type</th>
+                <th>Sub Type</th>
+                <th>Floor</th>
+                <th>Regulation</th>
+                <th>Chemical State</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated from uploads or database -->
+            <tr class="empty-state">
+                <td colspan="11">No components loaded. Upload an Excel file or add components manually.</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <script src="script.js"></script>
+</body>
+</html>
